@@ -1,18 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.idlikadai.tuneinn.MainActivity">
+    android:layout_height="fill_parent"
+    android:layout_width="fill_parent"
+    android:background="#2c3e50"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:orientation="horizontal">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_gravity="center|center_horizontal|center_vertical"
+        android:layout_weight="1"
+        android:gravity="center">
 
-</android.support.constraint.ConstraintLayout>
+        <ImageView
+            android:layout_width="45dp"
+            android:layout_height="wrap_content"
+            android:scaleType="fitXY"
+            android:adjustViewBounds="true"
+            android:src="@drawable/ic_music_note_black_24px"
+            android:tint="#2ecc71"
+            />
+
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:scaleType="fitXY"
+            android:adjustViewBounds="true"
+            android:src="@drawable/ic_music_note_black_24px"
+            android:tint="#3498db"
+            />
+
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:scaleType="fitXY"
+            android:adjustViewBounds="true"
+            android:src="@drawable/ic_music_note_black_24px"
+            android:tint="#e74c3c"
+            />
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:scaleType="fitXY"
+            android:adjustViewBounds="true"
+            android:src="@drawable/ic_music_note_black_24px"
+            android:tint="#f1c40f"
+            />
+
+        <TextView
+            android:id="@+id/TextView_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TuneINN"
+            android:textSize="40dp"
+            android:textAlignment="center"
+            android:fontFamily="cursive"
+            android:textStyle="bold"
+            android:textColor="#ecf0f1"/>
+
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:scaleType="fitXY"
+            android:adjustViewBounds="true"
+            android:src="@drawable/ic_music_note_black_24px"
+            android:tint="#E91E63"
+            />
+
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:scaleType="fitXY"
+            android:adjustViewBounds="true"
+            android:src="@drawable/ic_music_note_black_24px"
+            android:tint="#9b59b6"
+            />
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:scaleType="fitXY"
+            android:adjustViewBounds="true"
+            android:src="@drawable/ic_music_note_black_24px"
+            android:tint="#CDDC39"
+            />
+
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:scaleType="fitXY"
+            android:adjustViewBounds="true"
+            android:src="@drawable/ic_music_note_black_24px"
+            android:tint="#1abc9c"
+            />
+    </LinearLayout>
+
+
+
+</LinearLayout>
