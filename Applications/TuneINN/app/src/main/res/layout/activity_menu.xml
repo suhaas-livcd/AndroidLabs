@@ -4,33 +4,25 @@
     android:layout_width="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:background="#1abc9c">
+    android:background="#2c3e50">
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="top"
-        android:layout_gravity="top|center">
+        android:layout_gravity="top|start">
 
         <ImageView
-            android:layout_marginRight="450dp"
+            android:id="@+id/ImageMenuBack"
             android:layout_width="60dp"
             android:layout_height="wrap_content"
             android:layout_gravity="top|start"
             android:adjustViewBounds="true"
             android:scaleType="fitXY"
-            android:src="@drawable/ic_chevron_left_black_24px" />
-
-        <ImageView
-            android:layout_width="60dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:adjustViewBounds="true"
-            android:scaleType="fitXY"
-            android:src="@drawable/ic_chevron_right_black_24px" />
-
-
+            android:src="@drawable/ic_chevron_left_black_24px"
+            android:tint="#ecf0f1"
+            android:onClick="GoToPreviousActvity"/>
     </LinearLayout>
 
     <LinearLayout
@@ -43,7 +35,43 @@
             android:layout_height="wrap_content"
             android:scaleType="fitXY"
             android:adjustViewBounds="true"
-            android:src="@drawable/ic_skip_previous_black_24dp"/>
+            android:src="@drawable/ic_skip_previous_black_24dp"
+            android:tint="#80DEEA"/>
+
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:scaleType="fitXY"
+            android:adjustViewBounds="true"
+            android:src="@drawable/ic_fast_rewind_black_24px"
+            android:tint="#ecf0f1"/>
+
+        <ImageView
+            android:id="@+id/ImageViewMenuPlay"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:onClick="ChnagePlaytoPause"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_play_arrow_black_24dp"
+            android:tint="#2ecc71" />
+
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:scaleType="fitXY"
+            android:adjustViewBounds="true"
+            android:src="@drawable/ic_stop_black_24px"
+            android:tint="#e74c3c"/>
+
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:scaleType="fitXY"
+            android:adjustViewBounds="true"
+            android:src="@drawable/ic_fast_forward_black_24px"
+            android:tint="#ecf0f1"/>
+
 
 
         <ImageView
@@ -51,39 +79,8 @@
             android:layout_height="wrap_content"
             android:scaleType="fitXY"
             android:adjustViewBounds="true"
-            android:src="@drawable/ic_fast_rewind_black_24px"/>
-
-        <ImageView
-            android:layout_width="60dp"
-            android:layout_height="wrap_content"
-            android:scaleType="fitXY"
-            android:adjustViewBounds="true"
-            android:src="@drawable/ic_play_arrow_black_24dp"/>
-
-
-
-        <ImageView
-            android:layout_width="60dp"
-            android:layout_height="wrap_content"
-            android:scaleType="fitXY"
-            android:adjustViewBounds="true"
-            android:src="@drawable/ic_stop_black_24px"/>
-
-        <ImageView
-            android:layout_width="60dp"
-            android:layout_height="wrap_content"
-            android:scaleType="fitXY"
-            android:adjustViewBounds="true"
-            android:src="@drawable/ic_fast_forward_black_24px"/>
-
-
-
-        <ImageView
-            android:layout_width="60dp"
-            android:layout_height="wrap_content"
-            android:scaleType="fitXY"
-            android:adjustViewBounds="true"
-            android:src="@drawable/ic_skip_next_black_24dp"/>
+            android:src="@drawable/ic_skip_next_black_24dp"
+            android:tint="#80DEEA"/>
 
 
     </LinearLayout>
