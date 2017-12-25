@@ -11,14 +11,19 @@ import java.util.ArrayList;
 public class ListActivity extends AppCompatActivity {
 
     private static final String TAG = "Log_ListActivity";
+    final String MEDIA_PATH = Environment.getExternalStorageDirectory().toString();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
-        final String MEDIA_PATH = Environment.getExternalStorageDirectory().toString();
+
         Log.d(TAG,MEDIA_PATH);
-        File root_folder= new File(MEDIA_PATH);
+
+    }
+
+    public ArrayList<File> ScanDirectory(){
+        File root_folder = new File(MEDIA_PATH);
         File[] all_files = root_folder.listFiles();
         for (File file  :all_files) {
             String FileName = file.getName();
@@ -29,10 +34,5 @@ public class ListActivity extends AppCompatActivity {
                 Log.d(TAG,FileName);
             }
         }
-    }
-
-    public ArrayList<File> ScanDirectory(){
-        ArrayList<File> arrayList = new ArrayList<>();
-
     }
 }
