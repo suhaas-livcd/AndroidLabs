@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
-public class MenuActivity extends AppCompatActivity {
+public class TrackInfoActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,7 +16,7 @@ public class MenuActivity extends AppCompatActivity {
     }
 
     public void GoToPreviousActvity(View view){
-        Intent intent = new Intent(MenuActivity.this,MainActivity.class);
+        Intent intent = new Intent(TrackInfoActivity.this,MainActivity.class);
         startActivity(intent);
     }
 
