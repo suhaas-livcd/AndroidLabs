@@ -1,0 +1,127 @@
+Reference File
+
+
+import android.content.Context;
+import android.graphics.PorterDuff;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Activity_Matched extends AppCompatActivity {
+    List<User_Profile> user_profiles = null;
+    UsersAdapter adapter = null ;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity__matched);
+        Database_Handler database_handler = new Database_Handler(getApplicationContext());
+        user_profiles = database_handler.getDatafromDB();
+        ListView users_list = (ListView) findViewById(R.id.users_list);
+//        ArrayAdapter<User_Profile> user_adapter = new ArrayAdapter<User_Profile>(this,android.R.layout.simple_list_item_1,user_profiles);
+//        users_list.setAdapter(user_adapter);
+
+        adapter = new UsersAdapter(this, (ArrayList<User_Profile>) user_profiles);
+        users_list.setAdapter(adapter);
+
+//        TextView USERname = (TextView) findViewById(R.id.user_name);
+//        USERname.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                openOptionsMenu();
+//            }
+//        });
+    }
+
+
+
+    private View.OnClickListener onClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()){
+                case R.id.user_name:
+                    Integer i = (Integer)v.getTag(R.string.tag_name);
+                    user_profiles.get(i).setIsUserNameSelected(!user_profiles.get(i).isUserNameSelected());
+                    adapter.notifyDataSetChanged();
+                    break;
+                case R.id.imageView_fav:
+
+                    break;
+                default:
+
+
+            }
+        }
+    };
+
+    public class UsersAdapter extends ArrayAdapter<User_Profile> {
+        public UsersAdapter(Context context, ArrayList<User_Profile> users) {
+            super(context, 0, users);
+        }
+
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            // Get the data item for this position
+            User_Profile temp_user_profile = getItem(position);
+            // Check if an existing view is being reused, otherwise inflate the view
+
+            if (convertView == null) {
+                convertView = LayoutInflater.from(getContext()).inflate(R.layout.user_list_layout, parent, false);
+            }
+
+            // Lookup view for data population
+
+            final TextView USERname = (TextView) convertView.findViewById(R.id.user_name);
+            TextView USERplace = (TextView) convertView.findViewById(R.id.user_place);
+            TextView USERphone = (TextView) convertView.findViewById(R.id.user_phone);
+            final ImageView fav_image = (ImageView) convertView.findViewById(R.id.imageView_fav);
+
+            USERname.setOnClickListener(onClickListener);
+            USERname.setTag(R.string.tag_name, position);
+
+            fav_image.setOnClickListener(onClickListener);
+            fav_image.setTag(R.string.tag_name, position);
+
+            // Populate the data into the template view using the data object
+            if(temp_user_profile.isUserNameSelected()){
+                USERname.setTextColor(getResources().getColor(R.color.colorFav));
+                fav_image.setColorFilter(ContextCompat.getColor
+                        (getApplicationContext(), R.color.colorFav), PorterDuff.Mode.SRC_IN);
+                Database_Handler database_handler = new Database_Handler(getApplicationContext());
+                long IsAddedToFav = database_handler.Insert_data_toFav(temp_user_profile.getUser_id());
+                if(IsAddedToFav>0){
+                    Toast.makeText(getApplicationContext(),USERname.getText()+" added to fav !",Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Toast.makeText(getApplicationContext(),USERname.getText()+" not added :(",Toast.LENGTH_SHORT).show();
+                }
+            }else{
+                USERname.setTextColor(getResources().getColor(R.color.text_color));
+                fav_image.setColorFilter(ContextCompat.getColor
+                        (getApplicationContext(), R.color.text_color), PorterDuff.Mode.SRC_IN);
+            }
+            //USERname.setTextColor(getResources().getColor(R.color.colorFav));
+            USERname.setText(temp_user_profile.getUser_name()+" ");
+            USERplace.setText(temp_user_profile.getUser_place()+" ");
+            USERphone.setText(temp_user_profile.getUser_phone()+" ");
+
+
+            // Return the completed view to render on screen
+
+            return convertView;
+
+        }
+
+    }
+}
