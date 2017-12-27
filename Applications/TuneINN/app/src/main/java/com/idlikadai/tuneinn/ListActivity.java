@@ -123,6 +123,16 @@ public class ListActivity extends AppCompatActivity {
         private String TrackLength;
         private String TrackYear;
 
+        public Boolean getISsongSelected() {
+            return ISsongSelected;
+        }
+
+        public void setISsongSelected(Boolean ISsongSelected) {
+            this.ISsongSelected = ISsongSelected;
+        }
+
+        private Boolean ISsongSelected;
+
         public String getTrackPath() {
             return TrackPath;
         }
