@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="72dp"
+    android:layout_width="match_parent"
+    android:background="#34495e"
+    android:orientation="horizontal">
+
+    <ImageView
+        android:layout_width="0dip"
+        android:layout_height="match_parent"
+        android:src="@drawable/ic_music_note_black_24px"
+        android:id="@+id/sound_note"
+        android:tint="#1abc9c"
+        android:layout_weight="0.15"
+        android:padding="10dip"/>
+
+    <FrameLayout
+        android:layout_width="0dip"
+        android:layout_height="match_parent"
+        android:layout_weight="0.7">
+        <TextView
+            android:id="@+id/song_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Title"
+            android:fontFamily="sans-serif-smallcaps"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Display1"
+            android:textColor="#ecf0f1"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:layout_marginTop="5dip"
+            android:layout_gravity="top|center_horizontal"/>
+
+        <TextView
+            android:id="@+id/song_author"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="serif-monospace"
+            android:maxLines="1"
+            android:text="Singer"
+            android:layout_marginBottom="5dip"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+            android:textColor="#bdc3c7"
+            android:gravity="center"
+            android:layout_gravity="bottom|center_horizontal"/>
+    </FrameLayout>
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_height="match_parent"
+        android:src="@drawable/ic_favorite_black_24px"
+        android:layout_width="0dip"
+        android:tint="#7f8c8d"
+        android:layout_weight="0.15"
+        android:padding="10dip"/>
+</LinearLayout>
