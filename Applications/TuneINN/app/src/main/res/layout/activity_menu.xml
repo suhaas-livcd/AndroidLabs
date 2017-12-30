@@ -37,7 +37,7 @@
 
             <ImageView
                 android:id="@+id/Image_albumart"
-                android:layout_width="200dp"
+                android:layout_width="190dp"
                 android:layout_height="wrap_content"
                 android:scaleType="fitXY"
                 android:adjustViewBounds="true"
@@ -47,30 +47,33 @@
                 />
 
             <TextView
+                android:id="@+id/DTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-smallcaps"
-                android:layout_toRightOf="@id/Image_albumart"
-                android:text="Title"
+                android:layout_marginLeft="50dp"
                 android:layout_marginTop="40dp"
-                android:layout_marginLeft="50dp"
+                android:layout_toRightOf="@id/Image_albumart"
+                android:fontFamily="sans-serif-smallcaps"
+                android:text="Title"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
                 android:textColor="#ecf0f1"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/DArtist"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-smallcaps"
-                android:layout_toRightOf="@id/Image_albumart"
-                android:text="Artist"
-                android:layout_marginTop="70dp"
                 android:layout_marginLeft="50dp"
+                android:layout_marginTop="70dp"
+                android:layout_toRightOf="@id/Image_albumart"
+                android:fontFamily="sans-serif-smallcaps"
+                android:text="Artist"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
                 android:textColor="#ecf0f1"
-                android:textStyle="italic"/>
+                android:textStyle="italic" />
 
             <TextView
+                android:id="@+id/DAlbum"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-smallcaps"
@@ -85,8 +88,8 @@
     </LinearLayout>
 
     <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
         <SeekBar
             android:id="@+id/seekbar"
@@ -94,7 +97,7 @@
             android:layout_height="wrap_content"/>
 
         <TextView
-            android:id="@+id/TextView_starTime"
+            android:id="@+id/TextStartTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="0:00"
@@ -107,7 +110,7 @@
             />
 
         <TextView
-            android:id="@+id/TextView_endTime"
+            android:id="@+id/TextEndTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="10:00"
@@ -145,17 +148,19 @@
             android:src="@drawable/ic_fast_rewind_black_24px"
             android:tint="#ecf0f1"/>
 
-        <ImageView
-            android:id="@+id/ImageViewMenuPlay"
+        <ImageButton
+            android:background="#2c3e50"
+            android:id="@+id/Button_Pause"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
             android:onClick="ChnagePlaytoPause"
             android:scaleType="fitXY"
-            android:src="@drawable/ic_play_arrow_black_24dp"
+            android:src="@drawable/ic_pause_black_24px"
             android:tint="#2ecc71" />
 
         <ImageView
+            android:id="@+id/Image_Stop"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:scaleType="fitXY"

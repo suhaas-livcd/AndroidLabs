@@ -1,41 +1,68 @@
 package com.idlikadai.tuneinn;
 
+import android.app.IntentService;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
 import android.media.MediaMetadataRetriever;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Parcelable;
+import android.support.annotation.LayoutRes;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ListActivity extends AppCompatActivity {
 
     private static final String TAG = "Log_ListActivity";
-    private static  ArrayList<TrackMetaData> songsList = new ArrayList<>();
-
+    private static List<TrackMetaData> songsList = new ArrayList<>();
+    SongsDisplayAdapter songsDisplayAdapter = null;
+    public static final String TrackINFO = null;
+    public static int indexOfTrackSelected = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
+
         final String MEDIA_PATH = Environment.getExternalStorageDirectory().toString();
         Log.d(TAG,MEDIA_PATH);
-        try {
-            copyResourcesToStorage(MEDIA_PATH);
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (MainActivity.isFirstTime){
+            try {
+                copyResourcesToStorage(MEDIA_PATH);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            if (songsList.size()>0)songsList.clear();
+            ScanDirectory(MEDIA_PATH);
+            Log.d(TAG,"Songs_Found" + songsList.size());
         }
-        if (songsList.size()>0)songsList.clear();
-        ScanDirectory(MEDIA_PATH);
-        Log.d(TAG,"Songs_Found" + songsList.size());
-        addSongsToList(songsList);
+        else{
+            songsList.get(indexOfTrackSelected).setISsongSelected(false);
+        }
+        songsDisplayAdapter = new SongsDisplayAdapter(this,songsList);
+        ListView listView = (ListView) findViewById(R.id.Songs_List);
+        listView.setAdapter(songsDisplayAdapter);
+        listView.setSelection(indexOfTrackSelected);
     }
+
 
     public void copyResourcesToStorage(String DIR_PATH) throws IOException{
         File root_folder = new File(DIR_PATH, getResources().getString(R.string.app_name));
@@ -43,7 +70,7 @@ public class ListActivity extends AppCompatActivity {
             root_folder.mkdir();
         }
 
-        int[] SampleSoundFiles = {R.raw.sound_1,R.raw.sound_2,R.raw.sound_3};
+        int[] SampleSoundFiles = {R.raw.casio,R.raw.roland,R.raw.sound_1,R.raw.sound_2,R.raw.sound_3};
         for (int ResID:SampleSoundFiles
                 ) {
             TypedValue resource_name = new TypedValue();
@@ -60,7 +87,7 @@ public class ListActivity extends AppCompatActivity {
         }
     }
 
-    public ArrayList<TrackMetaData> ScanDirectory(String DIR_PATH)  {
+    public List<TrackMetaData> ScanDirectory(String DIR_PATH)  {
         File root_folder = new File(DIR_PATH);
         //Make a folder with the APPName
         if (root_folder.exists()){
@@ -79,7 +106,7 @@ public class ListActivity extends AppCompatActivity {
                         mmr.setDataSource(File_Path);
                         String TrackPath = file.getPath();
                         String preTrackTitle = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE);
-                        String TrackTitle = preTrackTitle != null ? preTrackTitle :  File_Path.replace("[.]\\w*","") ;
+                        String TrackTitle = preTrackTitle != null ? preTrackTitle :  FileName.replaceAll("[.]\\w*","") ;
                         String TrackArtist = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST)+"";
                         String TrackAlbum = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ALBUM)+"";
                         String TrackGenre = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_GENRE)+"";
@@ -105,88 +132,51 @@ public class ListActivity extends AppCompatActivity {
         return songsList;
     }
 
-    public void addSongsToList(ArrayList<TrackMetaData> songsList){
-        ListView listView = (ListView) findViewById(R.id.List_Songs);
+    private View.OnClickListener onClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()){
+                case R.id.song_title:
+                    Integer i = (Integer)v.getTag(R.string.TitleTag);
+                    indexOfTrackSelected = i;
+                    songsList.get(i).setISsongSelected(!songsList.get(i).getISsongSelected());
+                    songsDisplayAdapter.notifyDataSetChanged();
+                    break;
 
-    }
+            }
+        }
+    };
 
-    /**
-     * This class stores the track Info
-     */
-    class TrackMetaData {
-
-        private String TrackPath;
-        private String TrackTitle;
-        private String TrackArtist;
-        private String TrackAlbum;
-        private String TrackGenre;
-        private String TrackLength;
-        private String TrackYear;
-
-        public Boolean getISsongSelected() {
-            return ISsongSelected;
+    public class SongsDisplayAdapter extends ArrayAdapter<TrackMetaData>{
+        public SongsDisplayAdapter(Context context, List<com.idlikadai.tuneinn.TrackMetaData> songsLists) {
+            super(context, 0, songsLists);
         }
 
-        public void setISsongSelected(Boolean ISsongSelected) {
-            this.ISsongSelected = ISsongSelected;
-        }
-
-        private Boolean ISsongSelected;
-
-        public String getTrackPath() {
-            return TrackPath;
-        }
-
-        public void setTrackPath(String trackPath) {
-            TrackPath = trackPath;
-        }
-
-        public String getTrackTitle() {
-            return TrackTitle;
-        }
-
-        public void setTrackTitle(String trackTitle) {
-            TrackTitle = trackTitle;
-        }
-
-        public String getTrackArtist() {
-            return TrackArtist;
-        }
-
-        public void setTrackArtist(String trackArtist) {
-            TrackArtist = trackArtist;
-        }
-
-        public String getTrackAlbum() {
-            return TrackAlbum;
-        }
-
-        public void setTrackAlbum(String trackAlbum) {
-            TrackAlbum = trackAlbum;
-        }
-
-        public String getTrackGenre() {
-            return TrackGenre;
-        }
-
-        public void setTrackGenre(String trackGenre) {
-            TrackGenre = trackGenre;
-        }
-
-        public String getTrackLength() {
-            return TrackLength;
-        }
-
-        public void setTrackLength(String trackLength) {
-            TrackLength = trackLength;
-        }
-
-        public String getTrackYear() {
-            return TrackYear;
-        }
-
-        public void setTrackYear(String trackYear) {
-            TrackYear = trackYear;
+        @NonNull
+        @Override
+        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+            TrackMetaData trackMetaData= getItem(position);
+            if (convertView==null){
+                convertView = LayoutInflater.from(getContext()).inflate(R.layout.displaysongs,parent,false);
+            }
+            final TextView TrackTitle = (TextView) convertView.findViewById(R.id.song_title);
+            final TextView TrackAuthor = (TextView) convertView.findViewById(R.id.song_author);
+            TrackTitle.setOnClickListener(onClickListener);
+            TrackTitle.setTag(R.string.TitleTag,position);
+            if (trackMetaData.getISsongSelected()){
+                TrackTitle.setTextColor(getResources().getColor(R.color.colorTrackPlay));
+                Intent intent = new Intent(getContext(),TrackInfoActivity.class);
+                Bundle b = new Bundle();
+                b.putParcelable(TrackINFO,trackMetaData);
+                intent.putExtras(b);
+                startActivity(intent);
+            }
+            else{
+                TrackTitle.setTextColor(getResources().getColor(R.color.colorTrackDefault));
+            }
+            TrackTitle.setText(trackMetaData.getTrackTitle());
+            TrackAuthor.setText(trackMetaData.getTrackArtist());
+            return convertView;
         }
     }
 }
