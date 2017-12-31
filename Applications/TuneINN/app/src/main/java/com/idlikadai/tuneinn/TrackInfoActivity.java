@@ -11,27 +11,35 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class TrackInfoActivity extends AppCompatActivity {
+    private static final String TAG = "APP_DBG";
     TrackMetaData trackMetaData = null;
     private static MediaPlayer mediaPlayer = null;
     private static String CurrentSong = "";
     private static String PreviousSong =  "";
     private static boolean isPause = false;
     private Handler mHandler = null;
+    SeekBar seekBar = null;
+    TextView startTime = null , endTime = null;
+    TextView TrackTitle = null;
+    TextView TrackArtist = null;
+    TextView TrackAlbum = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d(TAG,"Track Info Created");
         MainActivity.isFirstTime = false;
         setContentView(R.layout.activity_menu);
         Bundle bundle = getIntent().getExtras();
         trackMetaData = bundle.getParcelable(ListActivity.TrackINFO);
         CurrentSong = trackMetaData.getTrackPath();
-        TextView TrackTitle = (TextView) findViewById(R.id.DTitle);
+        TrackTitle = (TextView) findViewById(R.id.DTitle);
         TrackTitle.setText(trackMetaData.getTrackTitle());
-        TextView TrackArtist = (TextView) findViewById(R.id.DArtist);
+        TrackArtist = (TextView) findViewById(R.id.DArtist);
         TrackArtist.setText(trackMetaData.getTrackArtist());
-        TextView TrackAlbum = (TextView) findViewById(R.id.DAlbum);
+        TrackAlbum = (TextView) findViewById(R.id.DAlbum);
         TrackAlbum.setText(trackMetaData.getTrackAlbum());
         if (mediaPlayer!=null){
             if(CurrentSong.equals(PreviousSong)){
@@ -41,7 +49,7 @@ public class TrackInfoActivity extends AppCompatActivity {
                 //song changed
                 mediaPlayer.reset();
                 mediaPlayer = MediaPlayer.create(getApplicationContext(), Uri.parse(trackMetaData.getTrackPath()));
-                mediaPlayer.setLooping(true);
+                //mediaPlayer.setLooping(true);
                 CurrentSong = trackMetaData.getTrackPath();
                 mediaPlayer.start();
             }
@@ -72,12 +80,12 @@ public class TrackInfoActivity extends AppCompatActivity {
         });
 
         mHandler = new Handler();
-        final SeekBar seekBar = (SeekBar) findViewById(R.id.seekbar);
-        final TextView startTime = (TextView) findViewById(R.id.TextStartTime);
-        final TextView EndTime = (TextView) findViewById(R.id.TextEndTime);
+        seekBar = (SeekBar) findViewById(R.id.seekbar);
+        startTime = (TextView) findViewById(R.id.TextStartTime);
+        endTime = (TextView) findViewById(R.id.TextEndTime);
         int Total_Length = Integer.parseInt(trackMetaData.getTrackLength());
         int end_minutes = (Total_Length/1000)/60;
-        EndTime.setText(end_minutes+":"+(Total_Length-(60*end_minutes)));
+        endTime.setText(end_minutes+":"+(Total_Length-(60*end_minutes)));
         TrackInfoActivity.this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -110,18 +118,57 @@ public class TrackInfoActivity extends AppCompatActivity {
             }
         });
 
+
+        /**
+         * This method is invoked when the media player is stopped.
+         */
         ImageView imageStop = (ImageView) findViewById(R.id.Image_Stop);
         imageStop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+               StopPlaying();
+           }
+        });
 
+        ImageView imagelistSongs = (ImageView) findViewById(R.id.ImageListButton);
+        imagelistSongs.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PreviousSong = trackMetaData.getTrackPath();
+                Intent intent = new Intent(TrackInfoActivity.this,ListActivity.class);
+                startActivity(intent);
             }
         });
     }
 
+    /**
+     * This method is invoked when the user presses the back chevron button on the screen
+     * Previous songs list is invoked
+     * @param view
+     */
     public void GoToPreviousActvity(View view){
-        PreviousSong = trackMetaData.getTrackPath();
-        Intent intent = new Intent(TrackInfoActivity.this,ListActivity.class);
-        startActivity(intent);
+        Toast.makeText(getApplicationContext(),"Back Button Disabled",Toast.LENGTH_SHORT).show();
+    }
+
+    private void StopPlaying(){
+        if (mediaPlayer!=null){
+            mediaPlayer.stop();
+            mediaPlayer.release();
+            mediaPlayer = null;
+        }
+        RestoreDeafults();
+    }
+
+    private void RestoreDeafults(){
+        if (seekBar!=null){
+            seekBar.setProgress(0);
+        }
+        if (startTime!=null && endTime!=null){
+            startTime.setText("0:00");
+            endTime.setText("0:00");
+        }
+        TrackTitle.setText("No track selected");
+        TrackArtist.setText("Artist");
+        TrackAlbum.setText("Album");
     }
 }

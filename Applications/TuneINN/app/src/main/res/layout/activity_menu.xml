@@ -6,24 +6,34 @@
     android:orientation="vertical"
     android:background="#2c3e50">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
+    <FrameLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="top"
-        android:layout_gravity="top|start">
+        android:orientation="horizontal">
 
-        <ImageView
+    <ImageView
+            android:layout_gravity="top|start|center"
             android:id="@+id/ImageMenuBack"
             android:layout_width="60dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="top|start"
             android:adjustViewBounds="true"
-            android:scaleType ="fitXY"
+            android:onClick="GoToPreviousActvity"
+            android:scaleType="fitXY"
             android:src="@drawable/ic_chevron_left_black_24px"
-            android:tint="#ecf0f1"
-            android:onClick="GoToPreviousActvity"/>
-    </LinearLayout>
+            android:tint="#ecf0f1" />
+
+        <ImageView
+            android:padding="8dp"
+            android:id="@+id/ImageListButton"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|end|center"
+            android:adjustViewBounds="true"
+            android:onClick="GoToPreviousActvity"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_format_list_bulleted_black_24dp"
+            android:tint="#ecf0f1" />
+    </FrameLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
