@@ -17,15 +17,11 @@ public class TrackInfoActivity extends AppCompatActivity {
     private static final String TAG = "APP_DBG";
     TrackMetaData trackMetaData = null;
     private static MediaPlayer mediaPlayer = null;
-    private static String CurrentSong = "";
-    private static String PreviousSong =  "";
+    private static String CurrentSong = "", PreviousSong =  "";
     private static boolean isPause = false;
     private Handler mHandler = null;
     SeekBar seekBar = null;
-    TextView startTime = null , endTime = null;
-    TextView TrackTitle = null;
-    TextView TrackArtist = null;
-    TextView TrackAlbum = null;
+    TextView startTime = null , endTime = null, TrackTitle = null ,TrackArtist = null, TrackAlbum = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
